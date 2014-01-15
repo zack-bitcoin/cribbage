@@ -134,11 +134,12 @@ def newline():
     return '''<br />
 {}'''
 database='crib.db'
+initial_db={'L':[0,1], "M":[0,1], "Z":[0,1]}
 def fs_load():
    try:
       return pickle.load(open(database, 'rb'))
    except:
-      fs_save({'L':[0,0], "M":[0,0], "Z":[0,0]})
+      fs_save(initial_db)
       return pickle.load(open(database, 'rb'))      
 def fs_save(dic):
     pickle.dump(dic, open(database, 'wb'))
@@ -164,6 +165,8 @@ def home(dic_in):
         increase('M', int(dic_in['M_add']))
     if 'Z_add' in dic_in:
         increase('Z', int(dic_in['Z_add']))
+    if 'restart' in dic_in:
+        fs_save(initial_db)
     fs=fs_load()
     #    out='<img src="/home/zack/Hacking/cribbage/board.png">'
     out='<html><body>{}</body></html>'
@@ -198,6 +201,7 @@ def home(dic_in):
     out=out.format(easyForm('/home', 'Points to L', "<input type='text' name='L_add'>"),'')
     out=out.format(easyForm('/home', 'Points to M', "<input type='text' name='M_add'>"),'')
     out=out.format(easyForm('/home', 'Points to Z', "<input type='text' name='Z_add'>"),'')
+    out=out.format('_______________________'+easyForm('/home', 'RESTART', "<input type='hidden' name='restart' value='True'>"),'')
     return out.format("")
 
 class MyHandler(BaseHTTPRequestHandler):
