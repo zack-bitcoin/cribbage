@@ -1,8 +1,3 @@
-from xmlrpclib import ServerProxy
-try:
-    from jsonrpc import ServiceProxy
-except:
-    from bitcoinrpc import AuthServiceProxy as ServiceProxy       
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import string,cgi,time, json, random, copy, pickle
 PORT=8090
